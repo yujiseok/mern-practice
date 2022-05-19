@@ -1,6 +1,5 @@
 const express = require("express");
 const app = express();
-const port = 8080;
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
@@ -17,11 +16,15 @@ app.use(cookieParser());
 
 mongoose
   .connect(config.mongoURI)
-  .then(() => console.log("db connected"))
-  .catch((err) => console.err(err));
+  .then(() => console.log("DB connected..."))
+  .catch((err) => console.error(err));
 
 app.get("/", (req, res) => {
   res.send("Hello world");
+});
+
+app.get("/api/hello", (req, res) => {
+  res.send("하이루");
 });
 
 app.post("/api/users/register", (req, res) => {
@@ -104,6 +107,7 @@ app.get("/api/users/logout", auth, (req, res) => {
   );
 });
 
+const port = 5000;
 app.listen(port, () => {
   console.log(`서버 돌아가는 중 포트는 ${port}`);
 });
